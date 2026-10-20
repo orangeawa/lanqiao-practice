@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>新闻中心</title>
+  <link rel="stylesheet" href="./css/index.css">
+
+</head>
+
+<body>
+  <div id="app" v-cloak>
+    <header>
+      <h1>新闻中心</h1>
+      <h2>与未来同行，让我们的生活更美好</h2>
+    </header>
+
+    <main>
+      <template v-if="isLoading">
+        <div class="skeleton" v-for="skeleton in 3" :key="skeleton">
+          <p class="title"></p>
+          <p class="source"></p>
+          <p class="content"></p>
+          <div class="new-footer">
+            <span></span>
+            <span></span>
+          </div>
+        </div>
+      </template>
+
+      <template v-else>
+        <div class="new-item" v-for="(item,index) in newsList" :key="index" :title="item.title" :source="item.source"
+          :content="item.content" :author="item.author" :date="item.createTime">
+          <p class="title">{{ item.title}}</p>
+          <p class="source">来源：{{ item.source }}</p>
+          <p class="content">{{ item.content }}</p>
+          <div class="new-footer">
+            <span>{{ item.author }}</span>
+            <span>{{ item.createTime }}</span>
+          </div>
+        </div>
+      </template>
+    </main>
+
+
+    <transition name="notify">
+      <div class="notify" v-if="retryNewsList.length">
+        <p>获取到了新的新闻，是否载入？</p>
+        <button class="confirm" @click="onInsertData">确定</button>
+      </div>
+    </transition>
+
+
+  </div>
+
+  <script src="./lib/axios.min.js"></script>
+  <script src="./lib/axios-mock-adapter.min.js"></script>
+  <script src="./lib/mock.js"></script>
+  <script src="./lib/vue@next.js"></script>
+  <script>
+    const { ref, onMounted, reactive, toRefs, watch } = Vue;
+
+    const app = Vue.createApp({
+      setup() {
+        const newsList = ref([])
+        const retryNewsList = ref([])
+        const isLoading = ref(true)
+        const failedSources = [];
+
+// TODO：待补充代码
+/**
+ * @param {Array} requestUrls - 新闻源的请求地址列表
+*/
+async function getNews(requestUrls) {
+  /**
+   * @param {Array} b - 请求结果列表
+   * @param {Ref} c - 存储新闻数据的响应式引用
+   */
+  const a = (b, c) => {
+    // 获取到数据的数据添加到目标新闻列表中
+    b.forEach(r => r && c.value.push(...r.data.data));
+    // 替换字段
+    c.value.forEach(i => {
+      i.name && (i.title = i.name);
+      i.date && (i.createTime = i.date);
+      i.origin && (i.source = i.origin);
+      i.from && (i.source = i.from);
+    });
+    // 排序
+    c.value.sort((a, b) => new Date(b.createTime) - new Date(a.createTime));
+  }
+
+  const requests = requestUrls.map(url => axios.get(url).catch(_ => (failedSources.push(url), null)));
+  const responses = await Promise.all(requests);
+  a(responses, newsList);
+
+  const retryRequests = failedSources.map(url => axios.get(url));
+  const r2 = await Promise.all(retryRequests);
+  a(r2, retryNewsList);
+
+  isLoading.value = false;
+}
+  // TODO：END
+
+        // 所有新闻源的请求地址
+        const newsSource = ['news/caijing', 'news/shehui', 'news/keji', 'news/yule', 'news/jiaoyu', 'news/guoji']
+        getNews(newsSource)
+
+        // 载入加载失败，重试后获取成功的新闻
+        const onInsertData = () => {
+          newsList.value = [...newsList.value, ...retryNewsList.value]
+          retryNewsList.value = []
+          newsList.value.sort((a, b) => new Date(b.createTime) - new Date(a.createTime));
+        }
+
+        return {
+          isLoading,
+          newsList,
+          retryNewsList,
+          onInsertData
+        }
+      }
+    });
+
+    let vm = app.mount('#app');
+
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,28 @@
+{
+  "code": 200,
+  "msg": "success",
+  "data": {
+    "algorithm_problems": [
+      {
+        "id": 101,
+        "title": "排序",
+        "pass": "0.87",
+        "difficulty": 0
+      },
+      {
+        "id": 102,
+        "title": "单词分析",
+        "pass": "0.86",
+        "difficulty": 1
+      }
+    ],
+    "real_world_problems": [
+      {
+        "id": 213,
+        "title": "成绩统计",
+        "pass": "0.85",
+        "difficulty": 2
+      }
+    ]
+  }
+}

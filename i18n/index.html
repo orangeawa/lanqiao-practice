@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>蓝桥云课</title>
+  <script src="./lib/vue.global.js"></script>
+  <link href="./css/style.css" rel="stylesheet" type="text/css" />
+  <script src="./components/NavBar.js"></script>
+  <script src="./components/Menu.js"></script>
+  <script src="./components/CardGroup.js"></script>
+  <script src="./i18n/en_US.js"></script>
+  <script src="./i18n/ja_JP.js"></script>
+  <script src="./i18n/zh_CN.js"></script>
+  <script src="./js/i18n.js"></script>
+  <script src="./js/url.js"></script>
+</head>
+
+<body>
+  <div id="app">
+    <div class="main-theme" :class="theme === 'dark' ? 'dark' : 'light'">
+      <nav-bar :nav-list="navList" @url-change="handleUrlChange"></nav-bar>
+
+      <div class="banner">
+        <h1>Welcome to Our Website</h1>
+      </div>
+
+      <lq-menu :menu-list="menuList"></lq-menu>
+
+      <div class="section-wrapper">
+        <div class="section">
+          <div class="section-unit">
+            <h1>{{ nationalContest }}</h1>
+            <card-group :card-list="cardList"></card-group>
+          </div>
+          <div class="section-unit">
+            <h1>{{ currentContest }}</h1>
+            <div class="card-big">
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+  <script src="./js/index.js"></script>
+</body>
+
+</html>

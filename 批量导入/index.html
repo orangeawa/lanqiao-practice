@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>批量导入</title>
+  <script src="./lib/axios.js"></script>
+  <script src="./js/resolveDefine.js"></script>
+  <script src="./js/dataConverter.js"></script>
+  <script src="./js/index.js"></script>
+  <link href="./css/styles.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+  <div class="container">
+    <div class="action-panel">
+      <button onclick="handleBatchImport()">开始导入</button>
+    </div>
+    <div class="result-table">
+      <table>
+        <thead>
+          <tr>
+            <th>日志时间</th>
+            <th>日志等级</th>
+            <th>日志文本</th>
+            <th>数字范围</th>
+            <th>日期范围</th>
+            <th>间隔时长（小时）</th>
+          </tr>
+        </thead>
+        <tbody id="result-table"></tbody>
+      </table>
+    </div>
+  </div>
+</body>
+
+</html>

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>挑战者计划</title>
+    <link rel="stylesheet" href="./css/style.css" />
+  </head>
+  <body>
+    <div id="app">
+      <div class="top">
+        <h1>挑战者计划</h1>
+        <template v-for="t in types">
+          <!-- TODO ①:待修改代码 -->
+          <button
+            class="btn"
+            @click="changeType(t)"
+          >
+            {{t}}
+          </button>
+        </template>
+        <p>
+          题目类型：
+          <!-- TODO ②:待修改代码 -->
+          <span id="topicType"> 算法 </span>
+        </p>
+      </div>
+      <ul>
+        <li class="challenge-item-title">
+          <span>序号</span>
+          <span>题目</span>
+          <span>难度</span>
+          <span>通过率</span>
+          <button>开始挑战</button>
+        </li>
+        <li
+          class="challenge-item"
+          v-for="{ id,title,difficulty,pass} in currentChallengeList"
+        >
+          <span>{{id}} </span>
+          <span>{{title}}</span>
+          <span>
+            <!--TODO ③: 待修改代码 -->
+            <a>{{difficulty === 0 ? '简单' : difficulty === 1 ? '中等' : '困难'}}</a>
+          </span>
+          <span>{{`${pass.slice(2)}%`}}</span>
+          <button>开始挑战</button>
+        </li>
+      </ul>
+    </div>
+    <script type="module">
+      import {
+        createApp,
+        ref,
+        watchEffect,
+        computed,
+      } from "./lib/vue.esm-browser.prod.js";
+
+      const API_URL = `./mock/data.json`;
+      const types = ["算法", "场景实战"];
+      const typeMap = {
+        算法: "algorithm_problems",
+        场景实战: "real_world_problems",
+      };
+
+      createApp({
+        setup() {
+          const challengeList = ref(null);  // 所有数据
+          const currentChallengeList = ref(null); // 当前显示数据
+          watchEffect(async () => {
+            // 请求并默认显示 “算法” 题目列表
+            challengeList.value = await (await fetch(API_URL)).json(); // 请求数据
+            currentChallengeList.value =
+              challengeList.value.data.algorithm_problems; // 设置当前默认数据
+          });
+          // 点击算法和场景实战按钮事件
+          const changeType = (type) => {
+
+            // 点击按钮时切换当前显示数据
+            currentChallengeList.value =
+              challengeList.value.data[typeMap[type]];
+          };
+          return {
+            types,
+            currentChallengeList,
+            changeType,
+          };
+        },
+      }).mount("#app");
+    </script>
+  </body>
+</html>

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>GitHub Desktop</title>
+    <link rel="stylesheet" href="./css/style.css" />
+    <script src="./lib/vue.global.js"></script>
+    <script src="./js/useRefHistory.js"></script>
+  </head>
+  <body>
+    <div id="app">
+      <div class="app-header-container">
+        <div class="app-header-item-container" data-disabled="true">
+          <div class="app-header-item-label">当前仓库 (Repository)</div>
+          <div class="app-header-item-title">测试仓库</div>
+        </div>
+        <div
+          class="app-header-item-container switch-branch-container"
+          @click="toggleShowBranchPanel"
+        >
+          <div class="app-header-item-label">当前分支 (Branch)</div>
+          <div class="app-header-item-title">{{ gitState.currentBranch }}</div>
+          <div class="switch-branch-panel" @click.stop v-if="showBranchPanel">
+            <div class="new-branch-container">
+              <input v-model="inputNewBranch" />
+              <div class="new-branch-button" @click="onNewBranchClick">
+                新建分支
+              </div>
+            </div>
+            <div class="branch-list-container">
+              <div
+                class="branch-item-container"
+                v-for="item in gitState.branchList"
+                :key="item"
+                @click="onBranchClick(item)"
+              >
+                <div class="branch-item-name">{{ item }}</div>
+                <div
+                  class="branch-item-delete"
+                  :id="'del-branch-'+item"
+                  @click.stop="onBranchDelete(item)"
+                >
+                  删除分支
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="app-header-op-button" id="btn-undo" @click="undo">撤销操作</div>
+        <div class="app-header-op-button" id="btn-redo" @click="redo">恢复操作</div>
+      </div>
+      <div class="app-body-container">
+        <div class="commits-history-container">
+          <div class="commit-title">提交记录 (Commits)</div>
+          <div
+            v-for="(item,index) in currentBranchCommits"
+            :class="`commit-item-container ${activeIndex==index?'acitve':''}`"
+            :key="item.commitId"
+            @click="onClickCommit(item,index)"
+          >
+            <div class="commit-item-title">{{ item.title }}</div>
+            <div class="commit-item-description">
+              {{ item.author }} · {{ item.date }}
+            </div>
+          </div>
+        </div>
+        <div class="commit-content-container" v-if="currentCommit">
+          <div class="commit-content-title">
+            {{ currentCommit.title }}
+            <div
+              class="branch-item-delete"
+              @click="onRollBackClick(currentCommit.commitId)"
+            >
+              回滚到此 Commit
+            </div>
+          </div>
+          <div class="commit-content-description">
+            <div>改动人: {{ currentCommit.author }}</div>
+            <div>提交ID (CommitId): {{ currentCommit.commitId }}</div>
+            <div>提交于: {{ currentCommit.date }}</div>
+          </div>
+          <div class="commit-content-divider"></div>
+          <div class="commit-change-details">
+            <p>改动 {{ currentCommit.fileChanged.length }} 个文件：</p>
+            <p :key="item" v-for="item in currentCommit.fileChanged">
+              {{ item }}
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="./js/index.js"></script>
+  </body>
+</html>

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="zhCN">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>大事件活动日历</title>
+  <link rel="stylesheet" href="./css/element-plus.css">
+  <link rel="stylesheet" href="./css/style.css">
+  <script src="./lib/vue.global.js"></script>
+  <script src="./lib/element-plus.js"></script>
+  <script src="./lib/localeZhCn.js"></script>
+  <script src="./components/activity-cell.js"></script>
+</head>
+
+<body>
+  <div id="app">
+    <el-calendar :model-value="currentTime">
+      <!-- 头 -->
+      <template #header="{ date }">
+        <h3>
+          大事件活动日历
+        </h3>
+        <div>
+          <el-button @click="openEditModal()" type="primary" style="margin-right: 10px;" class="add-activity">
+            + 增加活动
+          </el-button>
+          <el-button-group>
+            <!-- TODO 待补充代码 目标3 绑定点击事件，完成活动切换 -->
+            <el-button class="prev-activity" @click="cIndex && --cIndex">
+              &lt; 上一场活动
+            </el-button>
+            <el-button class="next-activity" @click="cIndex < activities.length - 1 && ++cIndex">
+              下一场活动 &gt;
+            </el-button>
+            <!-- TODO END -->
+          </el-button-group>
+        </div>
+      </template>
+      <!-- 真正的日历内容 -->
+      <template #date-cell="{ data }">
+        <div>
+          <!-- 日期展示 -->
+          <p class="day">{{ data.day.split('-').slice(1).join('-') }}</p>
+          <!-- TODO 待补充代码 目标1 展示包含当前日期的日程单元格，以下演示代码可删除 -->
+          <div v-for="(i,index) in activities">
+            <template v-if="normalizeDate(data.date) >= i.startTime && normalizeDate(data.date) <= i.endTime">
+              <activity-cell :has-left="normalizeDate(data.date) > i.startTime"
+                :has-right="normalizeDate(data.date) < i.endTime" :title="i.title" :highlight="index == cIndex"
+                @click="openEditModal(i,index)">
+              </activity-cell>
+            </template>
+          </div>
+          <!-- TODO END  -->
+        </div>
+      </template>
+    </el-calendar>
+    <el-dialog v-model="dialogVisible" title="编辑活动信息" width="500">
+      <!-- TODO 待补充代码 目标2 完成表单属性绑定 -->
+      <el-form label-width="auto" style="max-width: 600px" :model="form">
+        <el-form-item label="活动名称">
+          <el-input v-model="form.title" placeholder="请输入活动名称" class="activity-input" />
+        </el-form-item>
+        <el-form-item label="活动时间">
+          <el-date-picker type="daterange" class="activity-date-picker" range-separator="~" start-placeholder="开始时间"
+            end-placeholder="结束时间" v-model="form.time" />
+        </el-form-item>
+      </el-form>
+      <!-- TODO END  -->
+      <template #footer>
+        <div class="dialog-footer">
+          <el-button @click="handleRemove" type="danger" class="remove">删除</el-button>
+          <el-button type="primary" @click="handleSubmit" class="submit">
+            提交
+          </el-button>
+        </div>
+      </template>
+    </el-dialog>
+  </div>
+  <script src="js/index.js"></script>
+</body>
+
+</html>

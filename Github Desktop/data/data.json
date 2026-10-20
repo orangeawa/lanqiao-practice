@@ -1,0 +1,142 @@
+{
+  "currentBranch": "master",
+  "branches": ["master", "develop"],
+  "branchCommitsObject": {
+    "master": [
+      {
+        "commitId": "ab6aeb8621d68d7ebae1867da231442a",
+        "fileChanged": [
+          "/mauris/viverra/diam/vitae/quam/suspendisse/potenti.jsp",
+          "/vulputate/luctus/cum/sociis.xml",
+          "/vestibulum/sit/amet/cursus/id.html"
+        ],
+        "author": "Meriel Follin",
+        "date": "11-20 19:51",
+        "title": "第 5 次提交"
+      },
+      {
+        "commitId": "8c0649e2a266789ba0e5c2a7541aa859",
+        "fileChanged": [
+          "/aliquam/augue/quam/sollicitudin.jsp",
+          "/integer/ac.xml",
+          "/ut/erat/curabitur/gravida.jsp",
+          "/odio/curabitur/convallis/duis/consequat/dui.aspx"
+        ],
+        "author": "Meyer Micklewright",
+        "date": "11-20 12:27",
+        "title": "第 4 次提交"
+      },
+      {
+        "commitId": "cb1e6a71022445fbec0678fa826fbada",
+        "fileChanged": [
+          "/aliquam.json",
+          "/lectus/vestibulum/quam/sapien/varius/ut/blandit.json",
+          "/sapien.xml",
+          "/id/nisl.png"
+        ],
+        "author": "Muriel Dorset",
+        "date": "11-20 11:43",
+        "title": "第 3 次提交"
+      },
+      {
+        "commitId": "8492873a14370bffe994141ac20f8ab9",
+        "fileChanged": [
+          "/accumsan/tortor/quis/turpis.jpg",
+          "/aliquet/ultrices/erat/tortor.jsp"
+        ],
+        "author": "Edita Wressell",
+        "date": "11-20 07:28",
+        "title": "第 2 次提交"
+      },
+      {
+        "commitId": "08e5005c757e0aca8809518a7b72ef2f",
+        "fileChanged": [
+          "/semper/interdum/mauris/ullamcorper.jpg",
+          "/eu/orci.jsp"
+        ],
+        "author": "Aile Baines",
+        "date": "11-20 03:06",
+        "title": "第 1 次提交"
+      }
+    ],
+    "develop": [
+      {
+        "commitId": "b1904e6ef44861e8398b39a5537d5c25",
+        "fileChanged": [
+          "/vel/dapibus/at/diam/nam.js",
+          "/diam/id.js",
+          "/ac/nibh.html"
+        ],
+        "author": "Kass Labbez",
+        "date": "11-21 05:36",
+        "title": "第 7 次提交"
+      },
+      {
+        "commitId": "c7dfc21ad7fb2e607081a984bd556a17",
+        "fileChanged": [
+          "/quis/justo/maecenas.jpg",
+          "/id/turpis.aspx",
+          "/lobortis/ligula/sit/amet/eleifend/pede/libero.json"
+        ],
+        "author": "Carola Mattiato",
+        "date": "11-21 04:01",
+        "title": "第 6 次提交"
+      },
+      {
+        "commitId": "ab6aeb8621d68d7ebae1867da231442a",
+        "fileChanged": [
+          "/mauris/viverra/diam/vitae/quam/suspendisse/potenti.jsp",
+          "/vulputate/luctus/cum/sociis.xml",
+          "/vestibulum/sit/amet/cursus/id.html"
+        ],
+        "author": "Meriel Follin",
+        "date": "11-20 19:51",
+        "title": "第 5 次提交"
+      },
+      {
+        "commitId": "8c0649e2a266789ba0e5c2a7541aa859",
+        "fileChanged": [
+          "/aliquam/augue/quam/sollicitudin.jsp",
+          "/integer/ac.xml",
+          "/ut/erat/curabitur/gravida.jsp",
+          "/odio/curabitur/convallis/duis/consequat/dui.aspx"
+        ],
+        "author": "Meyer Micklewright",
+        "date": "11-20 12:27",
+        "title": "第 4 次提交"
+      },
+      {
+        "commitId": "cb1e6a71022445fbec0678fa826fbada",
+        "fileChanged": [
+          "/aliquam.json",
+          "/lectus/vestibulum/quam/sapien/varius/ut/blandit.json",
+          "/sapien.xml",
+          "/id/nisl.png"
+        ],
+        "author": "Muriel Dorset",
+        "date": "11-20 11:43",
+        "title": "第 3 次提交"
+      },
+      {
+        "commitId": "8492873a14370bffe994141ac20f8ab9",
+        "fileChanged": [
+          "/accumsan/tortor/quis/turpis.jpg",
+          "/aliquet/ultrices/erat/tortor.jsp"
+        ],
+        "author": "Edita Wressell",
+        "date": "11-20 07:28",
+        "title": "第 2 次提交"
+      },
+      {
+        "commitId": "08e5005c757e0aca8809518a7b72ef2f",
+        "fileChanged": [
+          "/semper/interdum/mauris/ullamcorper.jpg",
+          "/eu/orci.jsp"
+        ],
+        "author": "Aile Baines",
+        "date": "11-20 03:06",
+        "title": "第 1 次提交"
+      }
+    ]
+  }
+}

@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible"="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>拼车路线规划工具</title>
+    <script src="./js/index.js"></script>
+    <style>
+        .h-6 { height: 1.5rem; } .w-6 { width: 1.5rem; } .flex-none { flex: none; } .fill-sky-100 { fill: #e0f2fe; } .stroke-sky-500 { stroke: #0ea5e9; } .stroke-2 { stroke-width: 2; margin-right: 10px; } .error { stroke: #ef4444; } .failText { margin-left: 10px; color: red; } body { font-family: 'Arial', sans-serif; margin: 0; padding: 20px; background-color: #f1f5f9; } .container { max-width: 800px; margin: 0 auto; background-color: #ffffff; padding: 20px; border-radius: 8px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); } h1 { text-align: center; color: #1e293b; } .test-result { margin: 10px 0; padding: 10px; border: 1px solid #cbd5e1; border-radius: 5px; background-color: #e2e8f0; display: flex; align-items: center; } .test-result.pass { border-color: #0ea5e9; background-color: #9dd5ef; } .test-result.fail { border-color: #ef4444; background-color: #f8d7da; } pre { background-color: #f1f5f9; padding: 10px; border: 1px solid #cbd5e1; border-radius: 5px; white-space: pre-wrap; line-height: 2.3; word-wrap: break-word; text-align: left; } .passText { margin-left: 10px; color: green; font-size: 16px; font-weight: bold; } .args { text-align: left; text-indent: 10px; } .keyword { color: blue; font-weight: bold; } .string { color: green; } .comment { color: gray; font-style: italic; } code { display: block; color: chocolate; padding: 0 20px; background: #fff; } .argKey{color:darkviolet; }
+   </style>
+</head>
+
+<body>
+    <div class="container">
+        <h2>拼车路线规划工具</h2>
+        <div id="results"></div>
+    </div>
+
+    <script>
+        function runTests(fn) {
+            const resultsContainer = document.getElementById('results');
+
+            const testCases = [
+                {
+                    name: '测试用例1',
+                    args: { // args 对应 函数接收的参数  key 为参数名，value 为参数值
+                        points: [
+                            { name: '站点1', coord: [620, 130] },
+                            { name: '站点2', coord: [575, 295] },
+                            { name: '站点3', coord: [222, 132] },
+                            { name: '站点4', coord: [121, 300] },
+                            { name: '站点5', coord: [324, 434] },
+                            { name: '站点6', coord: [423, 333] }
+                        ]
+                    },
+                    // expected 期望结果
+                    expected: [
+                        {
+                            "name": "站点1",
+                            "coord": [
+                                620,
+                                130
+                            ]
+                        },
+                        {
+                            "name": "站点2",
+                            "coord": [
+                                575,
+                                295
+                            ]
+                        },
+                        {
+                            "name": "站点6",
+                            "coord": [
+                                423,
+                                333
+                            ]
+                        },
+                        {
+                            "name": "站点5",
+                            "coord": [
+                                324,
+                                434
+                            ]
+                        },
+                        {
+                            "name": "站点4",
+                            "coord": [
+                                121,
+                                300
+                            ]
+                        },
+                        {
+                            "name": "站点3",
+                            "coord": [
+                                222,
+                                132
+                            ]
+                        }
+                    ],
+                },
+                {
+                    name: '测试用例2',
+                    args: { // args 对应 函数接收的参数  key 为参数名，value 为参数值
+                        points: [
+                            { name: '站点1', coord: [524, 130] },
+                            { name: '站点2', coord: [575, 295] },
+                            { name: '站点3', coord: [122, 132] },
+                            { name: '站点4', coord: [121, 300] },
+                            { name: '站点5', coord: [324, 434] },
+                            { name: '站点6', coord: [423, 333] }
+                        ]
+                    },
+                    // expected 期望结果
+                    expected:  [
+                        {
+                            "name": "站点1",
+                            "coord": [
+                                524,
+                                130
+                            ]
+                        },
+                        {
+                            "name": "站点2",
+                            "coord": [
+                                575,
+                                295
+                            ]
+                        },
+                        {
+                            "name": "站点6",
+                            "coord": [
+                                423,
+                                333
+                            ]
+                        },
+                        {
+                            "name": "站点5",
+                            "coord": [
+                                324,
+                                434
+                            ]
+                        },
+                        {
+                            "name": "站点4",
+                            "coord": [
+                                121,
+                                300
+                            ]
+                        },
+                        {
+                            "name": "站点3",
+                            "coord": [
+                                122,
+                                132
+                            ]
+                        }
+                    ], 
+                }
+            ];
+
+            function addResult(testName, passed, testCode) {
+                const resultElement = document.createElement('div');
+                resultElement.className = 'test-result ' + (passed ? 'pass' : 'fail');
+                resultElement.innerHTML = '<span class="icon">' + (passed ? '<svg class="h-6 w-6 flex-none fill-sky-100 stroke-sky-500 stroke-2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="11" /><path d="m8 13 2.165 2.165a1 1 0 0 0 1.521-.126L16 9" fill="none" /></svg>' : '<svg class="h-6 w-6 flex-none fill-sky-100 stroke-sky-500 error  stroke-2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="11" /><path d="M8 8 L16 16 M16 8 L8 16" fill="none" /></svg>') + '</span><strong>' + testName + ':</strong> ' + (passed ? '<span class="passText">通过测试</span>' : '<span  class="failText">未通过测试</span>');
+                resultsContainer.appendChild(resultElement);
+
+                const preElement = document.createElement('pre');
+                preElement.innerHTML = testCode
+                resultsContainer.appendChild(preElement);
+            }
+
+            testCases.forEach(test => {
+                let params = Object.values(test.args)
+                let result = fn(...params); // uncsc 替换成测试的函数名
+                let passed = issame(test.expected, result);
+                const argsEntries = Object.entries(test.args).map(([key, value]) => `<p><span class="argKey">${key}:</span> ${JSON.stringify(value)}<p>`).join('');
+                testCode = `<span class="args">测试参数:</span><code id='code'>${argsEntries}</code><span class="args">你的返回值：</span> <code>${JSON.stringify(result,null,8)}</code> <span class="args">期望的返回值：</span><code>${JSON.stringify(test.expected, null, 8)}</code>
+                `;
+                addResult(test.name, passed, testCode);
+            });
+        }
+
+        runTests(findOptimalRoute); // 此处换成函数名称
+
+        function getType(obj) {
+            return Object.prototype.toString.call(obj).slice(8, -1).toLowerCase();
+        }
+        function arrayEqual(ary1, ary2) {
+            let testAry = []
+            if (ary1.length !== ary2.length) return false;
+            for (let i = 0; i < ary1.length; i++) {
+                if (getType(ary1[i]) == 'object') {
+                    if (!deepEqual(ary1[i], ary2[i])) {
+                        return false;
+                    }
+                } else if (getType(ary1[i]) == 'array') {
+                    testAry.push(arrayEqual(ary1[i], ary2[i]))
+                } else {
+                    return JSON.stringify(ary1.sort()) == JSON.stringify(ary2.sort())
+                }
+            }
+            return testAry.every(item => item == true);
+        }
+        function deepEqual(expected, result) {
+            let compareAry = [];
+            // 判断是对象还是数组
+            if (getType(expected) == 'object') {
+                let expectedKeys = Object.keys(expected);
+                let resultKeys = Object.keys(result);
+                // 先判断 key 是否长度相等
+                if (expectedKeys.length !== resultKeys.length) {
+                    return false;
+                }
+                // 判断 key 是否相同
+                if (!arrayEqual(expectedKeys, resultKeys)) {
+                    return false
+                }
+                // 如果 key 都相同，判断 value 值是否相同
+                for (let key in expected) {
+                    // 如果 key 对应的 value  仍然是对象，递归调用对象比对方法
+                    if (getType(expected[key]) == 'object') {
+                        compareAry.push(deepEqual(expected[key], result[key]))
+                        // 如果对应的 value 是数组调用数组的比对方法
+                    } else if (getType(expected[key]) == 'array') {
+                        compareAry.push(arrayEqual(expected[key], result[key]))
+                    } else {
+                        compareAry.push(expected[key] == result[key])
+                    }
+                }
+
+                return compareAry.every(item => item == true);
+                //  如果是数组的对比
+            } else if (getType(expected) == 'array') {
+                return arrayEqual(expected, result)
+            }
+        }
+
+        function issame(expected, result) {
+            if (result === undefined) return false;
+            // 如果是字符串   
+            if (typeof expected == "string") {
+                return expected.replace(/\s+/g, '') === result.replace(/\s+/g, '');
+            }
+
+            if (typeof expected == 'object') {
+                return deepEqual(expected, result)
+            }
+        }
+
+    function setupToggleButtons() {
+        const togglePre = (resultElement) => {
+            const preElement = resultElement.nextElementSibling; // Get the next sibling which is the <pre> element
+            if (preElement.style.display === "none" || preElement.style.display === "") {
+                preElement.style.display = "block"; // Show the <pre> element
+            } else {
+                preElement.style.display = "none"; // Hide the <pre> element
+            }
+            // Update the button text based on the visibility of the <pre> element
+            const toggleButton = resultElement.querySelector('button');
+            toggleButton.innerText = preElement.style.display === "block" ? '收起 ▼' : '查看详情 ►'; // Change arrow direction
+        };
+
+        const addToggleButton = (resultElement) => {
+            const toggleButton = document.createElement('button');
+            toggleButton.innerText = '查看详情 ►'; // Change initial button text
+            toggleButton.style.marginLeft = 'auto'; // Align to the right
+            toggleButton.style.display = 'flex'; // Use flex to center vertically
+            toggleButton.style.alignItems = 'center'; // Center vertically
+            toggleButton.style.backgroundColor = '#007bff'; // Button background color
+            toggleButton.style.color = '#fff'; // Button text color
+            toggleButton.style.border = 'none'; // Remove border
+            toggleButton.style.borderRadius = '5px'; // Rounded corners
+            toggleButton.style.padding = '5px 10px'; // Padding for the button
+            toggleButton.style.cursor = 'pointer'; // Pointer cursor on hover
+            toggleButton.onclick = () => togglePre(resultElement);
+            resultElement.appendChild(toggleButton);
+        };
+
+        const resultElements = document.querySelectorAll('.test-result');
+        resultElements.forEach(resultElement => {
+            const preElement = resultElement.nextElementSibling; // Get the corresponding <pre> element
+            preElement.style.display = "none"; // Hide the <pre> element by default
+            addToggleButton(resultElement); // Add the toggle button to each result
+        });
+    }
+
+    setupToggleButtons(); // Call the function to set up toggle buttons
+    </script>
+</body>
+
+</html>

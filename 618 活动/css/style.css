@@ -1,0 +1,53 @@
+/* TODO：待补充代码 */
+body,html{
+    margin: 0;
+}
+.banner-bg{
+    width: 1920px;
+    height:506px;
+    background-image: url('/images/banner-bg.png')
+}
+.a{
+    position: relative;
+    width: 1920px;
+    height: 1369px;
+    background: #290897;
+}
+.stage{
+    position: relative;
+    top: -42px;
+    width: 1920px;
+    height: 462px;
+    background-image: url('/images/stage.png');
+    background-position-x: center;
+}
+.neirong{
+    position: relative;
+    top: 60px;
+    left: 650px;
+    width: 620px;
+    height: 499px;
+    background-image: url('/images/neirong.png');
+}
+.title1{
+    position: relative;
+    top: 110px;
+    left: 637px;
+    background-image: url('/images/title1.png');
+    background-position-y: center;
+}
+.imglist{
+    position: absolute;
+    top: 236px;
+    left: 375px;
+    display: flex;
+    gap: 30px;
+}
+
+.aaa{
+    position: absolute;
+    top: 500px;
+    left: 360px;
+    width: 1200px;
+    height: 789px;
+}

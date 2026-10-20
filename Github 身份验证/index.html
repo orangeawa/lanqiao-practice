@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Github 身份验证</title>
+  <link rel="stylesheet" href="./css/login.css" />
+  <link rel="stylesheet" href="./css/authentication.css" />
+</head>
+
+<body>
+  <div id="app"></div>
+  <script type="importmap">
+        {
+          "imports": {
+            "pinia": "./lib/pinia.esm-browser.js",
+            "vue-demi": "./lib/index.mjs",
+            "vue": "./lib/vue.esm-browser.prod.js"
+          }
+        }
+    </script>
+  <script type="module">
+    import { createApp } from 'vue';
+    import Authentication from './component/Authentication.js';
+    import Login from "./component/Login.js";
+    import { createPinia } from 'pinia';
+    const app = createApp({
+      components: { Authentication, Login },
+      template: `
+    <div class="wrapper">
+        <authentication></authentication>
+        <login></login>
+    </div>
+    `
+    })
+    app.use(createPinia())
+    const vm = app.mount('#app')
+  </script>
+</body>
+
+</html>

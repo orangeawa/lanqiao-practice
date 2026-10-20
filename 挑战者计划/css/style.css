@@ -1,0 +1,98 @@
+button {
+  border: none;
+}
+.btn {
+  border-radius: 15px;
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.03);
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 400;
+  margin-right: 16px;
+  padding: 4px 16px;
+}
+.btn-primary {
+  background: linear-gradient(318deg, #195aff, #008fff);
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.03);
+  color: #fff;
+}
+.yellow {
+  background-color: #faac2b;
+  display: inline-block;
+  width: 60px;
+  height: 30px;
+  line-height: 30px;
+  border-radius: 10px;
+  text-align: center;
+  color: #fff;
+}
+.blue {
+  background-color: #0c73c2;
+  display: inline-block;
+  width: 60px;
+  height: 30px;
+  line-height: 30px;
+  border-radius: 10px;
+  text-align: center;
+  color: #fff;
+}
+.red {
+  background-color: #f64600;
+  display: inline-block;
+  width: 60px;
+  height: 30px;
+  line-height: 30px;
+  border-radius: 10px;
+  text-align: center;
+  color: #fff;
+}
+.flex {
+  align-items: center;
+  width: 80%;
+}
+.flex * {
+  text-align: center;
+  width: 20%;
+}
+.challenge-item-title {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  padding: 10px;
+  margin-bottom: 10px;
+}
+.challenge-item {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+  border: 1px solid #ccc;
+  margin-bottom: 10px;
+}
+
+.challenge-item span,
+.challenge-item-title span {
+  margin-right: 10px;
+  width: 20%;
+}
+.challenge-item-title button {
+  background: transparent;
+  border: none;
+}
+
+.challenge-item button {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+  border-radius: 10px;
+}
+
+.challenge-item button:hover {
+  background-color: #0056b3;
+}
+.top{
+   text-align: center;
+   border-bottom: 1px dotted #ccc;
+}

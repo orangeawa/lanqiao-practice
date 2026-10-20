@@ -1,0 +1,18 @@
+# 系统文件
+desktop.ini
+Thumbs.db
+.DS_Store
+
+# 编辑器
+.vscode/
+.idea/
+
+# 依赖与构建缓存
+node_modules/
+.vite/
+dist/
+.cache/
+
+# 日志
+*.log
+npm-debug.log*
